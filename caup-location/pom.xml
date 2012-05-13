@@ -8,18 +8,13 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <groupId>org.caup</groupId>
-  <artifactId>caup-location</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <name>caup-location</name>
-  <url>http://maven.apache.org</url>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <artifactId>caup-location</artifactId>  
+  <name>Caup location component</name>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>${junit}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
