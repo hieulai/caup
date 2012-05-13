@@ -1,0 +1,2 @@
+org.caup.user.service.UserService
+org.caup.user.service.impl.UserServiceImpl
