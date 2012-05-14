@@ -6,7 +6,6 @@ package org.caup.user.handler;
 import java.util.Iterator;
 
 import org.caup.user.Group;
-import org.caup.user.event.EventListener;
 import org.xwiki.component.annotation.ComponentRole;
 
 /**
@@ -16,9 +15,9 @@ import org.xwiki.component.annotation.ComponentRole;
  * May 12, 2012  
  */
 @ComponentRole
-public interface GroupHandler {
+public interface GroupHandler extends EntityHandler {
   
-  public void createGroup(Group group, boolean broadcast) throws Exception;
+  public Group createGroup(Group group, boolean broadcast) throws Exception;
 
   /**
    * Use this method to update the properties of an existed group. Usually you
@@ -33,7 +32,7 @@ public interface GroupHandler {
    * @throws Exception An exception is thrown if the method cannot access the
    *           database or any listener fail to handle the event
    */
-  public void saveGroup(Group group, boolean broadcast) throws Exception;
+  public Group saveGroup(Group group, boolean broadcast) throws Exception;
 
   /**
    * Use this method to remove a group from the group database. If the group has
@@ -50,17 +49,17 @@ public interface GroupHandler {
    *           group from the database, the group is not existed in the
    *           database, or any listener fail to handle the event.
    */
-  public Group removeGroup(Group group, boolean broadcast) throws Exception;
+  public void removeGroup(String groupName, boolean broadcast) throws Exception;
 
   /**
    * Use this method to search for a group
    * 
-   * @param groupId the id of the group that you want to search for
+   * @param groupName the id of the group that you want to search for
    * @return null if no record matched the group id or the found group
    * @throws Exception An exception is thrown if the method cannot access the
    *           database or more than one group is found.
    */
-  public Group findGroupById(String groupId) throws Exception;
+  public Group findGroupByName(String groupName) throws Exception;
 
   /**
    * use this method to look all the group that the user has at least one
@@ -79,18 +78,4 @@ public interface GroupHandler {
    * this method
    */
   public Iterator<Group> getAllGroups() throws Exception;
-
-  /**
-   * Use this method to register a group event listener
-   * 
-   * @param listener the group event listener instance.
-   */
-  public void addGroupEventListener(EventListener listener);
-
-  /**
-   * Use this method to unregister a group event listener
-   * 
-   * @param listener the group event listener instance.
-   */
-  public void removeGroupEventListener(EventListener listener);
 }

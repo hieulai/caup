@@ -3,7 +3,6 @@
  */
 package org.caup.user.handler.impl;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,12 +23,10 @@ import org.xwiki.component.annotation.Component;
  * May 12, 2012  
  */
 @Component
-public class UserHandlerImpl implements UserHandler {
+public class UserHandlerImpl extends EntityHandlerImpl implements UserHandler {
   
   @Inject
   private TransactionManager txManager;
-  
-  List<EventListener> listeners = new ArrayList<EventListener>();
 
   public User createUser(User user, boolean broadcast) throws Exception {
     TransactionSession session = txManager.openSession();
@@ -64,7 +61,7 @@ public class UserHandlerImpl implements UserHandler {
     return user;
   }
 
-  public User removeUser(String userName, boolean broadcast) throws Exception {
+  public void removeUser(String userName, boolean broadcast) throws Exception {
     TransactionSession session = txManager.openSession();
     User user = findUserByName(userName);
     if (user != null) {
@@ -80,7 +77,6 @@ public class UserHandlerImpl implements UserHandler {
         }
       }
     }
-    return null;
   }
 
   public User findUserByName(String userName) throws Exception {
@@ -116,14 +112,6 @@ public class UserHandlerImpl implements UserHandler {
   public boolean authenticate(String username, String password) throws Exception {
     // TODO Auto-generated method stub
     return false;
-  }
-
-  public void addUserEventListener(EventListener listener) {
-    this.listeners.add(listener);    
-  }
-
-  public void removeUserEventListener(EventListener listener) {
-    this.listeners.remove(listener);    
   }
 
 }

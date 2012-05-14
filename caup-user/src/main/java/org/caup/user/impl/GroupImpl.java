@@ -3,6 +3,12 @@
  */
 package org.caup.user.impl;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import org.caup.user.Group;
 
 /**
@@ -11,23 +17,17 @@ import org.caup.user.Group;
  *          hieulaitrung@gmail.com
  * May 12, 2012  
  */
+@Entity
+@Table(name = UserContraint.TABLES.GROUP)
 public class GroupImpl implements Group {
 
   private String groupName;
 
   private String desc;
 
-  public GroupImpl() {
-
-  }
-
-  public GroupImpl(String name) {
-    groupName = name;
-  }
-
-  /**
-   * @hibernate.property
-   **/
+  @Id
+  @NotNull
+  @Column(name = UserContraint.COLLUMS.NAME)
   public String getGroupName() {
     return groupName;
   }
@@ -36,9 +36,7 @@ public class GroupImpl implements Group {
     this.groupName = name;
   }
 
-  /**
-   * @hibernate.property
-   **/
+  @Column(name= UserContraint.COLLUMS.DESCRIPTION)
   public String getDescription() {
     return desc;
   }

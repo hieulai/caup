@@ -28,6 +28,8 @@ public interface UserContraint {
     
     public static final String DISPLAY_NAME = "display";
     
+    public static final String DESCRIPTION = "description";
+    
     
   }
 }

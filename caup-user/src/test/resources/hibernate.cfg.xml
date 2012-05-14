@@ -17,10 +17,11 @@
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
         
-        <property name="hbm2ddl.auto">create</property>
+        <property name="hbm2ddl.auto">create-drop</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
         <mapping class="org.caup.user.impl.UserImpl"/>
+        <mapping class="org.caup.user.impl.GroupImpl"/>
   </session-factory>
 </hibernate-configuration>

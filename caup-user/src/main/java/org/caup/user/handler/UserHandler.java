@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.caup.user.User;
-import org.caup.user.event.EventListener;
 import org.xwiki.component.annotation.ComponentRole;
 
 /**
@@ -17,7 +16,7 @@ import org.xwiki.component.annotation.ComponentRole;
  * May 12, 2012  
  */
 @ComponentRole
-public interface UserHandler {
+public interface UserHandler extends EntityHandler {
   /**
    * This method is used to persist a new user object.
    * 
@@ -60,7 +59,7 @@ public interface UserHandler {
    *         database
    * @throws Exception    
    */
-  public User removeUser(String userName, boolean broadcast) throws Exception;
+  public void removeUser(String userName, boolean broadcast) throws Exception;
 
   /**
    * @param userName the user that the user handler should search for
@@ -113,17 +112,5 @@ public interface UserHandler {
    */
   public boolean authenticate(String username, String password) throws Exception;
 
-  /**
-   * This method is used to register an user event listener
-   * 
-   * @param listener
-   */
-  public void addUserEventListener(EventListener listener);
-
-  /**
-   * This method is used to unregister an user event listener
-   * 
-   * @param listener
-   */
-  public void removeUserEventListener(EventListener listener);
+ 
 }
