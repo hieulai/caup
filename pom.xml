@@ -9,14 +9,15 @@
   <url>http://hieulai.github.com/caup/</url>
   <properties>
     <org.xwiki.version>3.3</org.xwiki.version>
-	<org.hibernate.validator.version>4.0.0.GA</org.hibernate.validator.version>
-	<org.hibernate.annotations.version>3.3.0.GA</org.hibernate.annotations.version>
-	<mysql-connector>5.0.5</mysql-connector>
-	<org.slf4j.version>1.5.8</org.slf4j.version>
-	<hsqldb>1.8.0.7</hsqldb>
-	<junit>3.8.1</junit>
-	<javassist>3.12.1.GA</javassist>
-	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <org.hibernate.validator.version>4.0.0.GA</org.hibernate.validator.version>
+    <org.hibernate.core.version>3.3.0.GA</org.hibernate.core.version>
+    <org.hibernate.annotations.version>3.3.0.ga</org.hibernate.annotations.version>
+    <mysql-connector>5.0.5</mysql-connector>
+    <org.slf4j.version>1.5.8</org.slf4j.version>
+    <hsqldb>1.8.0.7</hsqldb>
+    <junit>3.8.1</junit>
+    <javassist>3.12.1.GA</javassist>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
  </properties>
 
   <build>
