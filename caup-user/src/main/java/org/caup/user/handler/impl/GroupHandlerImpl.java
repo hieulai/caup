@@ -5,9 +5,10 @@ package org.caup.user.handler.impl;
 
 import java.util.Iterator;
 
-import org.caup.user.EventListener;
 import org.caup.user.Group;
+import org.caup.user.event.EventListener;
 import org.caup.user.handler.GroupHandler;
+import org.xwiki.component.annotation.Component;
 
 /**
  * Created by Caup
@@ -15,6 +16,7 @@ import org.caup.user.handler.GroupHandler;
  *          hieulaitrung@gmail.com
  * May 12, 2012  
  */
+@Component
 public class GroupHandlerImpl implements GroupHandler {
 
   public void createGroup(Group group, boolean broadcast) throws Exception {

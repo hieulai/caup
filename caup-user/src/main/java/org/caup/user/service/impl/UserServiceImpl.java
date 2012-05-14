@@ -3,11 +3,11 @@
  */
 package org.caup.user.service.impl;
 
+import javax.inject.Inject;
+
 import org.caup.plugin.Plugin;
 import org.caup.user.handler.GroupHandler;
 import org.caup.user.handler.UserHandler;
-import org.caup.user.handler.impl.GroupHandlerImpl;
-import org.caup.user.handler.impl.UserHandlerImpl;
 import org.caup.user.service.UserService;
 import org.xwiki.component.annotation.Component;
 
@@ -20,14 +20,11 @@ import org.xwiki.component.annotation.Component;
 @Component
 public class UserServiceImpl implements UserService  {
 
+  @Inject
   protected UserHandler userHandler;
 
-  protected GroupHandler groupHandler;  
-
-  public UserServiceImpl() {
-    userHandler = new UserHandlerImpl();
-    groupHandler = new GroupHandlerImpl();
-  }
+  @Inject
+  protected GroupHandler groupHandler;
 
   @Override
   public UserHandler getUserHandler() {

@@ -1,8 +1,7 @@
 /*
  * Copyright (C) 2003-2012 Caup
  */
-package org.caup.user;
-
+package org.caup.user.event;
 
 /**
  * Created by Caup
@@ -10,9 +9,6 @@ package org.caup.user;
  *          hieulaitrung@gmail.com
  * May 12, 2012  
  */
-public interface EventListener {
-  public EventType getType();
-
-  public boolean execute() throws Exception;
-  
+public enum EventType {
+  ADD, SAVE, REMOVE
 }

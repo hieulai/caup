@@ -1,2 +1,6 @@
 org.caup.user.service.UserService
 org.caup.user.service.impl.UserServiceImpl
+org.caup.user.handler.GroupHandler
+org.caup.user.handler.impl.GroupHandlerImpl
+org.caup.user.handler.UserHandler
+org.caup.user.handler.impl.UserHandlerImpl
