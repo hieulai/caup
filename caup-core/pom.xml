@@ -56,19 +56,19 @@
     <dependency>
       <groupId>javassist</groupId>
       <artifactId>javassist</artifactId>
-      <version>${javassist}</version>
+      <version>${javassist.version}</version>
     </dependency>
 
     <!-- SQL -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>${mysql-connector}</version>
+      <version>${mysql-connector.version}</version>
     </dependency>
     <dependency>
       <groupId>hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>${hsqldb}</version>
+      <version>${hsqldb.version}</version>
     </dependency>
 
     <dependency>
@@ -90,7 +90,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${junit}</version>
+      <version>${junit.version}</version>
     </dependency>
   </dependencies>
 </project>
