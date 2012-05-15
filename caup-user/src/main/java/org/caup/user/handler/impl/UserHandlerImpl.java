@@ -105,12 +105,17 @@ public class UserHandlerImpl extends EntityHandlerImpl implements UserHandler {
   }
 
   public Iterator<User> findUsersByQuery(String query) throws Exception {
-    // TODO Auto-generated method stub
-    return null;
+    TransactionSession session = txManager.openSession();
+    Iterator<User> result = session.createQuery(query).iterate();
+    session.commit();
+    session.close();    
+    return result;
   }
 
   public boolean authenticate(String username, String password) throws Exception {
-    // TODO Auto-generated method stub
+    User user = findUserByName(username);
+    if (user.getPassword().equals(password))
+      return true;
     return false;
   }
 

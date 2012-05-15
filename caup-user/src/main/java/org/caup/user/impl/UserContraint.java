@@ -13,9 +13,9 @@ public interface UserContraint {
 
   public interface TABLES {
 
-    public static final String USER = "User";
+    public static final String USER = "tbl_User";
 
-    public static final String GROUP = "Group";
+    public static final String GROUP = "tbl_Group";
   }
 
   public interface COLLUMS {
