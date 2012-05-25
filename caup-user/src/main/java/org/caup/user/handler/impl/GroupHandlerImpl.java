@@ -104,4 +104,13 @@ public class GroupHandlerImpl extends EntityHandlerImpl implements GroupHandler 
     return result;
   }
 
+  @Override
+  public Iterator<Group> findGroupsByQuery(String query) throws Exception {
+    TransactionSession session = txManager.openSession();
+    Iterator<Group> result = session.createQuery(query).iterate();
+    session.commit();
+    session.close();    
+    return result;
+  }
+
 }

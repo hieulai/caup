@@ -78,4 +78,13 @@ public interface GroupHandler extends EntityHandler {
    * this method
    */
   public Iterator<Group> getAllGroups() throws Exception;
+  
+  /**
+   * This method search for the groups according to a search criteria, the query
+   *
+   * @param query The query object contains the search criteria.
+   * @return return the found users in a iterator according to the query.
+   * @throws Exception throw exception if the service cannot access the database
+   */
+  public Iterator<Group> findGroupsByQuery(String query) throws Exception;
 }
