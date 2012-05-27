@@ -3,9 +3,10 @@
  */
 package org.caup.test;
 
-import org.xwiki.component.embed.EmbeddableComponentManager;
-
 import junit.framework.TestCase;
+
+import org.caup.transaction.TransactionManager;
+import org.xwiki.component.embed.EmbeddableComponentManager;
 
 /**
  * An abstract test case
@@ -17,17 +18,20 @@ import junit.framework.TestCase;
  */
 public class AbstractTestCase extends TestCase {
   
-  protected EmbeddableComponentManager componentManager;
+  protected EmbeddableComponentManager componentManager;  
+  protected TransactionManager txManager;
 
   @Override
   protected void setUp() throws Exception {
     this.componentManager = new EmbeddableComponentManager();
     this.componentManager.initialize(this.getClass().getClassLoader());
+    this.txManager = componentManager.lookup(TransactionManager.class);
     super.setUp();
   }
 
   @Override
   protected void tearDown() throws Exception {
+    this.componentManager = null;
     super.tearDown();
   }
 

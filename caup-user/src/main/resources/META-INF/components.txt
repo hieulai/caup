@@ -4,3 +4,5 @@ org.caup.user.handler.GroupHandler
 org.caup.user.handler.impl.GroupHandlerImpl
 org.caup.user.handler.UserHandler
 org.caup.user.handler.impl.UserHandlerImpl
+org.caup.user.handler.MembershipHandler
+org.caup.user.handler.impl.MembershipHandlerImpl

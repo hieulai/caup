@@ -1,9 +1,10 @@
 /*
  * Copyright (C) 2003-2012 Caup
  */
-package org.caup.user;
+package org.caup.user.entity;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Caup
@@ -56,7 +57,7 @@ public interface User {
   public Date getCreatedDate();
 
   /**
-   * @param t   
+   * @param t input created date
    */
   public void setCreatedDate(Date t);
 
@@ -69,15 +70,11 @@ public interface User {
   /**
    * @param displayName The name that should show in the display name
    */
-  public void setDisplayName(String displayName);
+  public void setDisplayName(String displayName);  
   
   /**
-   * @return return the grop name
+   * Get list group that user belongs to
+   * @return List of group
    */
-  public String getGroupName();
-
-  /**
-   * @param groupName
-   */
-  public void setGroupName(String groupName);
+  public List<? extends Group> getGroups();
 }

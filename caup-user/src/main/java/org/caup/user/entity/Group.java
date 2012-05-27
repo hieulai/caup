@@ -1,7 +1,10 @@
 /*
  * Copyright (C) 2003-2012 Caup
  */
-package org.caup.user;
+package org.caup.user.entity;
+
+import java.util.List;
+
 
 /**
  * Created by Caup
@@ -31,4 +34,10 @@ public interface Group {
    *          The new description of the group
    */
   public void setDescription(String desc);
+  
+  /**
+   * Get list of group's users
+   * @return users
+   */
+  public List<? extends User> getUsers();
 }

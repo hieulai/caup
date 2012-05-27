@@ -1,15 +1,20 @@
 /*
  * Copyright (C) 2003-2012 Caup
  */
-package org.caup.user.impl;
+package org.caup.user.entity.impl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.caup.user.Group;
+import org.caup.user.entity.Group;
 
 /**
  * Created by Caup
@@ -24,10 +29,12 @@ public class GroupImpl implements Group {
   private String groupName;
 
   private String desc;
+  
+  private List<UserImpl> users = new ArrayList<UserImpl>();
 
   @Id
   @NotNull
-  @Column(name = UserContraint.COLLUMS.NAME)
+  @Column(name = UserContraint.COLLUMS.GROUP_NAME)
   public String getGroupName() {
     return groupName;
   }
@@ -58,5 +65,23 @@ public class GroupImpl implements Group {
     } catch (CloneNotSupportedException e) {
       return this;
     }
+  }
+  
+  @ManyToMany(fetch = FetchType.LAZY)
+  @Override
+  public List<UserImpl> getUsers(){
+    return users;
+  }
+  
+  public void setUsers(List<UserImpl> users){
+    this.users = users;
+  }
+  
+  public void addUser(UserImpl user){
+    getUsers().add(user);
+  }
+  
+  public void removeUser(UserImpl user){
+    getUsers().remove(user);
   }
 }

@@ -3,9 +3,7 @@
  */
 package org.caup;
 
-import org.caup.test.AbstractTestCase;
-import org.caup.user.impl.GroupImpl;
-import org.caup.user.service.UserService;
+import org.caup.user.entity.impl.GroupImpl;
 
 /**
  * Created by Caup
@@ -13,49 +11,43 @@ import org.caup.user.service.UserService;
  *          hieulaitrung@gmail.com
  * May 15, 2012  
  */
-public class TestGroupHandler extends AbstractTestCase {
-  private UserService userService;
-
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    userService = componentManager.lookup(UserService.class);
-  }
+public class TestGroupHandler extends AbstractTestHandler {
 
   public void testCreateGroup() throws Exception{
-    GroupImpl group = createNewGroup();
-    userService.getGroupHandler().createGroup(group, true);   
-    assertNotNull(userService.getGroupHandler().findGroupByName("caup"));    
+    txManager.openSession();
+    GroupImpl group = TestUtils.createNewGroup();
+    userService.getGroupHandler().createGroup(group, true);
+    assertNotNull(userService.getGroupHandler().findGroupByName("caup"));
+    txManager.closeSession();
   }
   
   public void testUpdateGroup() throws Exception {
-    GroupImpl group = createNewGroup();
+    txManager.openSession();
+    GroupImpl group = TestUtils.createNewGroup();
     userService.getGroupHandler().createGroup(group, true);
     assertNotNull(userService.getGroupHandler().findGroupByName("caup"));
     group.setDescription("Work seriously");
     userService.getGroupHandler().saveGroup(group, true);
     assertEquals("Work seriously", userService.getGroupHandler().findGroupByName("caup").getDescription());
+    txManager.closeSession();
   }
 
   public void testRemoveGroup() throws Exception {
-    GroupImpl group = createNewGroup();
+    txManager.openSession();
+    GroupImpl group = TestUtils.createNewGroup();
     userService.getGroupHandler().createGroup(group, true);
     assertNotNull(userService.getGroupHandler().findGroupByName("caup"));
     userService.getGroupHandler().removeGroup("caup", true);
     assertNull(userService.getGroupHandler().findGroupByName("caup"));
+    txManager.closeSession();
   }
 
   public void testFindGroupByQuery() throws Exception {
+    txManager.openSession();
     String query = "From GroupImpl where description like '%fun%'";
-    GroupImpl group = createNewGroup();
+    GroupImpl group = TestUtils.createNewGroup();
     userService.getGroupHandler().createGroup(group, true);
     assertTrue(userService.getGroupHandler().findGroupsByQuery(query).hasNext());
-  }
-  
-  private GroupImpl createNewGroup(){
-    GroupImpl group = new GroupImpl();
-    group.setGroupName("caup");
-    group.setDescription("Having fun");
-    return group;
+    txManager.closeSession();
   }
 }

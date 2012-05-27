@@ -3,6 +3,8 @@
  */
 package org.caup.user.event;
 
+import org.caup.user.exception.EventListenerException;
+
 /**
  * 
  * 
@@ -14,6 +16,6 @@ package org.caup.user.event;
 public interface EventListener {
   public EventType getType();
 
-  public boolean execute() throws Exception;
+  public boolean execute() throws EventListenerException;
   
 }

@@ -1,18 +1,24 @@
 /*
  * Copyright (C) 2003-2012 Caup
  */
-package org.caup.user.impl;
+package org.caup.user.entity.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.caup.user.User;
+import org.caup.user.entity.User;
 /**
  * Created by Caup
  * Author : Lai Trung Hieu 
@@ -32,11 +38,11 @@ public class UserImpl implements User {
   private Date createdDate;
 
   private String displayName;
-
-  private String groupName;
+  
+  public List<GroupImpl> groups = new ArrayList<GroupImpl>();
 
   @Id
-  @Column(name = UserContraint.COLLUMS.NAME)
+  @Column(name = UserContraint.COLLUMS.USER_NAME)
   @NotNull
   public String getUserName() {
     return this.userName;
@@ -82,7 +88,6 @@ public class UserImpl implements User {
   @Column(name= UserContraint.COLLUMS.DISPLAY_NAME)
   @NotNull
   public String getDisplayName() {
-
     return this.displayName;
   }
 
@@ -90,14 +95,24 @@ public class UserImpl implements User {
     this.displayName = displayName;
 
   }
-
-  @Transient
-  public String getGroupName() {
-    return groupName;
+  
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(name = UserContraint.TABLES.USER_GROUP, joinColumns = { @JoinColumn(name = UserContraint.COLLUMS.USER_NAME, nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = UserContraint.COLLUMS.GROUP_NAME, nullable = false, updatable = false) })
+  @Override
+  public List<GroupImpl> getGroups() {
+    return this.groups;
   }
-
-  public void setGroupName(String groupName) {
-    this.groupName = groupName;
+  
+  public void setGroups(List<GroupImpl> groups) {
+    this.groups = groups;
   }
-
+  
+  public void addGroup(GroupImpl group){
+    getGroups().add(group);
+  }
+  
+  public void removeGroup(GroupImpl group){
+    getGroups().remove(group);
+  }
+  
 }

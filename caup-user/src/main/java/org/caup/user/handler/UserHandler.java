@@ -4,9 +4,11 @@
 package org.caup.user.handler;
 
 import java.util.Iterator;
-import java.util.List;
 
-import org.caup.user.User;
+import org.caup.transaction.exception.TransactionException;
+import org.caup.user.entity.User;
+import org.caup.user.exception.IdentityException;
+import org.caup.user.exception.UserNotFoundException;
 import org.xwiki.component.annotation.ComponentRole;
 
 /**
@@ -28,11 +30,11 @@ public interface UserHandler extends EntityHandler {
    *          account is created, a portal configuration should be created for
    *          the new user account at the same time. In this case the portal
    *          user event listener will be called in the createUser method.
-   * @throws Exception: The exception can be thrown if the the UserHandler
+   * @throws TransactionException: The exception can be thrown if the the UserHandler
    *           cannot persist the user object or any listeners fail to handle
    *           the user event.
    */
-  public User createUser(User user, boolean broadcast) throws Exception;
+  public User createUser(User user, boolean broadcast) throws TransactionException;
 
   /**
    * This method is used to update an existing User object
@@ -41,11 +43,11 @@ public interface UserHandler extends EntityHandler {
    * @param broadcast If the broadcast is true , then all the user event
    *          listener that register with the organization service will be
    *          called
-   * @throws Exception The exception can be thrown if the the UserHandler
+   * @throws TransactionException The exception can be thrown if the the UserHandler
    *           cannot save the user object or any listeners fail to handle the
    *           user event.
    */
-  public User saveUser(User user, boolean broadcast) throws Exception;
+  public User saveUser(User user, boolean broadcast) throws TransactionException;
 
   /**
    * Remove an user and broadcast the event to all the registered listener. When
@@ -57,49 +59,35 @@ public interface UserHandler extends EntityHandler {
    *          broadcasted to all registered listener
    * @return return the User object after that user has been removed from
    *         database
-   * @throws Exception    
+   * @throws TransactionException if removing process is fail    
    */
-  public void removeUser(String userName, boolean broadcast) throws Exception;
+  public void removeUser(String userName, boolean broadcast) throws TransactionException;
 
   /**
    * @param userName the user that the user handler should search for
    * @return The method return null if there no user matches the given user name.
    *         The method return an User object if an user that matches the
    *         user name.
-   * @throws Exception The exception is thrown if the method fail to access the
+   * @throws UserNotFoundException The exception is thrown if the method fail to access the
    *           user database or more than one user object with the same user name
    *           is found
    */
-  public User findUserByName(String userName) throws Exception;
-
-  
-  /**
-   * This method should search and return the list of the users in a given
-   * group.
-   *
-   * @param groupId id of the group. The return users list should be in this
-   *          group
-   * @return return a page list iterator of a group of the user in the database
-   * @throws Exception any exception
-   */
-  public List<User> findUsersByGroupId(String groupId) throws Exception;
+  public User findUserByName(String userName) throws UserNotFoundException;  
 
   /**
    * This method is used to get all the users in the database
    *
    * @return return a user iterator
-   * @throws Exception any exception
    */
-  public Iterator<User> findAllUsers() throws Exception;
+  public Iterator<User> findAllUsers();
 
   /**
    * This method search for the users according to a search criteria, the query
    *
    * @param query The query object contains the search criteria.
    * @return return the found users in a iterator according to the query.
-   * @throws Exception throw exception if the service cannot access the database
    */
-  public Iterator<User> findUsersByQuery(String query) throws Exception;
+  public Iterator<User> findUsersByQuery(String query);
 
   /**
    * Check if the user name and the password of an user is valid.
@@ -108,9 +96,9 @@ public interface UserHandler extends EntityHandler {
    * @param password
    * @return return true if the user name and the password is match with an user
    *         record in the database, else return false.
-   * @throws Exception throw an exception if cannot access the database
+   * @throws IdentityException throw an exception if cannot access the database
    */
-  public boolean authenticate(String username, String password) throws Exception;
+  public boolean authenticate(String username, String password) throws IdentityException;
 
  
 }

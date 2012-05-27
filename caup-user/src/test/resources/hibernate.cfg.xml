@@ -21,7 +21,7 @@
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
-        <mapping class="org.caup.user.impl.UserImpl"/>
-        <mapping class="org.caup.user.impl.GroupImpl"/>
+        <mapping class="org.caup.user.entity.impl.UserImpl"/>
+        <mapping class="org.caup.user.entity.impl.GroupImpl"/>
   </session-factory>
 </hibernate-configuration>

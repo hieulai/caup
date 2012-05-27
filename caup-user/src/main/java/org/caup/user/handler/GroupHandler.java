@@ -5,7 +5,9 @@ package org.caup.user.handler;
 
 import java.util.Iterator;
 
-import org.caup.user.Group;
+import org.caup.transaction.exception.TransactionException;
+import org.caup.user.entity.Group;
+import org.caup.user.exception.GroupNotFoundException;
 import org.xwiki.component.annotation.ComponentRole;
 
 /**
@@ -17,7 +19,14 @@ import org.xwiki.component.annotation.ComponentRole;
 @ComponentRole
 public interface GroupHandler extends EntityHandler {
   
-  public Group createGroup(Group group, boolean broadcast) throws Exception;
+  /**
+   * Create a group
+   * @param group to be create
+   * @param broadcast broadcast events or not
+   * @return a <code>Group</code>
+   * @throws TransactionException if saving process is fail 
+   */
+  public Group createGroup(Group group, boolean broadcast) throws TransactionException;
 
   /**
    * Use this method to update the properties of an existed group. Usually you
@@ -29,10 +38,10 @@ public interface GroupHandler extends EntityHandler {
    * @param group The group object with the updated information.
    * @param broadcast Broadcast the event to all the registered listener if the
    *          broadcast value is true
-   * @throws Exception An exception is thrown if the method cannot access the
+   * @throws TransactionException An exception is thrown if the method cannot access the
    *           database or any listener fail to handle the event
    */
-  public Group saveGroup(Group group, boolean broadcast) throws Exception;
+  public Group saveGroup(Group group, boolean broadcast) throws TransactionException;
 
   /**
    * Use this method to remove a group from the group database. If the group has
@@ -45,46 +54,32 @@ public interface GroupHandler extends EntityHandler {
    * @param broadcast Broadcast the event to the registered listener if the
    *          broadcast value is 'true'
    * @return Return the removed group.
-   * @throws Exception An exception is thrown if the method fail to remove the
+   * @throws TransactionException An exception is thrown if the method fail to remove the
    *           group from the database, the group is not existed in the
    *           database, or any listener fail to handle the event.
    */
-  public void removeGroup(String groupName, boolean broadcast) throws Exception;
+  public void removeGroup(String groupName, boolean broadcast) throws TransactionException;
 
   /**
    * Use this method to search for a group
    * 
    * @param groupName the id of the group that you want to search for
    * @return null if no record matched the group id or the found group
-   * @throws Exception An exception is thrown if the method cannot access the
-   *           database or more than one group is found.
+   * @throws <code>GroupNotFoundException</code> if none user is found
    */
-  public Group findGroupByName(String groupName) throws Exception;
-
-  /**
-   * use this method to look all the group that the user has at least one
-   * membership.
-   * 
-   * @param user The user name of the user
-   * @return A collection of the found group. The return collection cannot be
-   *         null, but it can be empty if no group is found.
-   * @throws Exception An exception is thrown if the method cannot access the
-   *           database.
-   */
-  public Iterator<Group> findGroupsOfUser(String user) throws Exception;
+  public Group findGroupByName(String groupName) throws GroupNotFoundException;
 
   /**
    * Use this method to get all the groups. But the third party should not use
    * this method
    */
-  public Iterator<Group> getAllGroups() throws Exception;
+  public Iterator<Group> getAllGroups();
   
   /**
    * This method search for the groups according to a search criteria, the query
    *
    * @param query The query object contains the search criteria.
    * @return return the found users in a iterator according to the query.
-   * @throws Exception throw exception if the service cannot access the database
    */
-  public Iterator<Group> findGroupsByQuery(String query) throws Exception;
+  public Iterator<Group> findGroupsByQuery(String query);
 }

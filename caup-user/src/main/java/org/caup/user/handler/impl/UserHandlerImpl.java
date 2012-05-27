@@ -9,10 +9,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.caup.transaction.TransactionManager;
-import org.caup.transaction.TransactionSession;
-import org.caup.user.User;
+import org.caup.transaction.exception.TransactionException;
+import org.caup.user.entity.User;
+import org.caup.user.entity.impl.UserContraint;
 import org.caup.user.event.EventListener;
 import org.caup.user.event.EventType;
+import org.caup.user.exception.IdentityException;
+import org.caup.user.exception.UserNotFoundException;
 import org.caup.user.handler.UserHandler;
 import org.xwiki.component.annotation.Component;
 
@@ -28,11 +31,10 @@ public class UserHandlerImpl extends EntityHandlerImpl implements UserHandler {
   @Inject
   private TransactionManager txManager;
 
-  public User createUser(User user, boolean broadcast) throws Exception {
-    TransactionSession session = txManager.openSession();
-    session.save(user);
-    session.commit();
-    session.close();
+  @Override
+  public User createUser(User user, boolean broadcast) throws TransactionException {    
+    txManager.getSession().save(user);
+    txManager.getSession().commit();    
     
     if (broadcast) {
       for (EventListener listener : this.listeners) {
@@ -44,12 +46,10 @@ public class UserHandlerImpl extends EntityHandlerImpl implements UserHandler {
     return user;        
   }
 
-  public User saveUser(User user, boolean broadcast) throws Exception {
-    TransactionSession session = txManager.openSession();
-    session.update(user);
-    session.commit();
-    session.close();
-    
+  @Override
+  public User saveUser(User user, boolean broadcast) throws TransactionException {    
+    txManager.getSession().update(user);
+    txManager.getSession().commit();    
     if (broadcast) {
       for (EventListener listener : this.listeners) {
         if (EventType.SAVE == listener.getType()) {
@@ -61,15 +61,13 @@ public class UserHandlerImpl extends EntityHandlerImpl implements UserHandler {
     return user;
   }
 
-  public void removeUser(String userName, boolean broadcast) throws Exception {
-    TransactionSession session = txManager.openSession();
+  @Override
+  public void removeUser(String userName, boolean broadcast) throws TransactionException {    
     User user = findUserByName(userName);
     if (user != null) {
-      session.delete(user);
+      txManager.getSession().delete(user);
     }
-    session.commit();
-    session.close();
-    
+    txManager.getSession().commit();    
     if (broadcast) {
       for (EventListener listener : this.listeners) {
         if (EventType.REMOVE == listener.getType()) {
@@ -79,40 +77,33 @@ public class UserHandlerImpl extends EntityHandlerImpl implements UserHandler {
     }
   }
 
-  public User findUserByName(String userName) throws Exception {
-    User user = null;
-    TransactionSession session = txManager.openSession();
-    List<User> result = session.createQuery(String.format("from UserImpl where name='%s'", userName)).list();
+  @Override
+  public User findUserByName(String userName) throws UserNotFoundException {
+    User user = null;    
+    List<User> result = txManager.getSession().createQuery(String.format("from UserImpl where %s='%s'",UserContraint.COLLUMS.USER_NAME, userName)).list();
     if (result.size() > 0) {
       user = result.get(0);
     }
-    session.commit();
-    session.close();
+    txManager.getSession().commit();    
     return user;
   }
-
-  public List<User> findUsersByGroupId(String groupId) throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  public Iterator<User> findAllUsers() throws Exception {
-    TransactionSession session = txManager.openSession();
-    Iterator<User> result = session.createQuery("from UserImpl").iterate();
-    session.commit();
-    session.close();    
+  
+  @Override
+  public Iterator<User> findAllUsers(){    
+    Iterator<User> result = txManager.getSession().createQuery("from UserImpl").iterate();
+    txManager.getSession().commit();        
     return result;
   }
 
-  public Iterator<User> findUsersByQuery(String query) throws Exception {
-    TransactionSession session = txManager.openSession();
-    Iterator<User> result = session.createQuery(query).iterate();
-    session.commit();
-    session.close();    
+  @Override
+  public Iterator<User> findUsersByQuery(String query){    
+    Iterator<User> result = txManager.getSession().createQuery(query).iterate();
+    txManager.getSession().commit();        
     return result;
   }
 
-  public boolean authenticate(String username, String password) throws Exception {
+  @Override
+  public boolean authenticate(String username, String password) throws IdentityException {
     User user = findUserByName(username);
     if (user.getPassword().equals(password))
       return true;

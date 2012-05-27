@@ -11,6 +11,6 @@ package org.caup.transaction.exception;
  *          hieulaitrung@gmail.com
  * May 13, 2012  
  */
-public class TransactionException extends Exception {
+public class TransactionException extends RuntimeException {
 
 }

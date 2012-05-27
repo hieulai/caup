@@ -3,8 +3,7 @@
  */
 package org.caup;
 
-import org.caup.test.AbstractTestCase;
-import org.caup.user.impl.UserImpl;
+import org.caup.user.entity.impl.UserImpl;
 import org.caup.user.service.UserService;
 
 /**
@@ -13,7 +12,7 @@ import org.caup.user.service.UserService;
  *          hieulaitrung@gmail.com
  * May 12, 2012  
  */
-public class TestUserHandler extends AbstractTestCase {
+public class TestUserHandler extends AbstractTestHandler {
   
   private UserService userService;
 
@@ -24,46 +23,47 @@ public class TestUserHandler extends AbstractTestCase {
   }
 
   public void testAddUser() throws Exception{
-    UserImpl user = createNewUser();
+    txManager.openSession();
+    UserImpl user = TestUtils.createNewUser();
     userService.getUserHandler().createUser(user, true);
-    assertNotNull(userService.getUserHandler().findUserByName("hieu"));    
+    assertNotNull(userService.getUserHandler().findUserByName("hieu"));
+    txManager.closeSession();
   }
   
   public void testUpdateUser() throws Exception {
-    UserImpl user = createNewUser();
+    txManager.openSession();
+    UserImpl user = TestUtils.createNewUser();
     userService.getUserHandler().createUser(user, true);
     user.setDisplayName("Hieu Lai Trung");
     userService.getUserHandler().saveUser(user, true);
     user = (UserImpl) userService.getUserHandler().findUserByName("hieu");
     assertEquals("Hieu Lai Trung", user.getDisplayName());
+    txManager.closeSession();
   }
   
   public void testDeleteUser() throws Exception {
-    UserImpl user = createNewUser();
+    txManager.openSession();
+    UserImpl user = TestUtils.createNewUser();
     userService.getUserHandler().createUser(user, true);
     userService.getUserHandler().removeUser("hieu", true);
     assertNull(userService.getUserHandler().findUserByName("hieu"));
+    txManager.closeSession();
   }
   
   public void testAuthenticateUser() throws Exception {
-    UserImpl user = createNewUser();
+    txManager.openSession();
+    UserImpl user = TestUtils.createNewUser();
     userService.getUserHandler().createUser(user, true);
     assertTrue(userService.getUserHandler().authenticate("hieu", "hieu"));
+    txManager.closeSession();
   }
   
   public void testFindUsersByQuery() throws Exception{
+    txManager.openSession();
     String query = "From UserImpl where email like 'hieulaitrung%'";    
-    UserImpl user = createNewUser();
+    UserImpl user = TestUtils.createNewUser();
     userService.getUserHandler().createUser(user, true);
-    assertTrue(userService.getUserHandler().findUsersByQuery(query).hasNext());    
-  }
-
-  private UserImpl createNewUser(){
-    UserImpl user = new UserImpl();
-    user.setUserName("hieu");
-    user.setDisplayName("Lai Trung Hieu");
-    user.setPassword("hieu");
-    user.setEmail("hieulaitrung@gmail.com");
-    return user;
+    assertTrue(userService.getUserHandler().findUsersByQuery(query).hasNext());
+    txManager.closeSession();
   }
 }

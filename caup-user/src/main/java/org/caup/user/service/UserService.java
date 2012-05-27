@@ -4,6 +4,7 @@
 package org.caup.user.service;
 
 import org.caup.user.handler.GroupHandler;
+import org.caup.user.handler.MembershipHandler;
 import org.caup.user.handler.UserHandler;
 import org.xwiki.component.annotation.ComponentRole;
 
@@ -17,7 +18,7 @@ import org.xwiki.component.annotation.ComponentRole;
 public interface UserService {
   /**
    * This method return an UserHandler object that use to manage the user
-   * opeation such create, update , detele , find user.
+   * operation such create, update , delete , find user.
    * 
    * @see UserHandler
    **/
@@ -30,7 +31,8 @@ public interface UserService {
   public GroupHandler getGroupHandler();
 
   /**
-   * @return return a MembershipTypeHandler implementation instance
-   * @see MembershipTypeHandler
-   */  
+   * @return return a MembershipHandler implementation instance
+   * @see MembershipHandler
+   */
+  public MembershipHandler getMembershipHandler();
 }

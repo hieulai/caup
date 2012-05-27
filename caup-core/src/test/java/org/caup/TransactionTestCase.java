@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.caup.test.AbstractTestCase;
-import org.caup.transaction.TransactionManager;
 import org.caup.transaction.TransactionSession;
 import org.caup.transaction.exception.TransactionException;
 
@@ -19,14 +18,6 @@ import org.caup.transaction.exception.TransactionException;
  * May 13, 2012  
  */
 public class TransactionTestCase extends AbstractTestCase {
-  
-  private TransactionManager txManager;
-
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    txManager = componentManager.lookup(TransactionManager.class);
-  }
   
   public void testTransActionManager() throws TransactionException{
     TransactionSession session = txManager.openSession();
